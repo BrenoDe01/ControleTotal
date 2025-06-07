@@ -1,4 +1,8 @@
-/* Estilos Gerais */
+/* --- Meta Tag Viewport (Fundamental no HTML) --- */
+/* Certifique-se que você tem esta linha no <head> do seu HTML: */
+/* <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
+
+/* --- Estilos Gerais (Mobile First - Base para Celulares) --- */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -6,8 +10,9 @@ body {
     background-color: #1a1a1a; /* Cor de fundo escura */
     color: #f0f0f0; /* Cor do texto padrão */
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column; /* Altera para coluna para melhor fluxo em mobile */
+    justify-content: flex-start; /* Alinha o conteúdo ao topo */
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
     min-height: 100vh;
     box-sizing: border-box;
 }
@@ -15,25 +20,25 @@ body {
 .container {
     width: 100%;
     max-width: 1200px; /* Largura máxima do conteúdo */
-    padding: 20px;
+    padding: 15px; /* Padding padrão para telas pequenas */
     text-align: center;
     box-sizing: border-box;
 }
 
 h1 {
-    font-size: 2.8em;
+    font-size: 1.8em; /* Tamanho de fonte para mobile */
     color: #4CAF50; /* Verde vibrante para o título */
-    margin-bottom: 40px;
+    margin-bottom: 25px; /* Margem para mobile */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 0 10px; /* Evita que o título grude nas bordas em telas super pequenas */
 }
 
 /* Estilos do Grid de Categorias */
 .categories-grid {
     display: grid;
-    /* Define 4 colunas com largura flexível (1fr) */
-    /* A quantidade de colunas será ajustada via media queries para responsividade */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px; /* Espaçamento entre os cards */
+    /* Padrão para mobile: 1 coluna */
+    grid-template-columns: 1fr;
+    gap: 20px; /* Espaçamento entre os cards */
     justify-content: center; /* Centraliza os itens no grid */
     align-items: stretch; /* Garante que todos os cards tenham a mesma altura */
 }
@@ -50,6 +55,8 @@ h1 {
     display: flex; /* Para organizar imagem e conteúdo verticalmente */
     flex-direction: column;
     cursor: pointer;
+    max-width: 350px; /* Limita a largura dos cards em mobile para não ficarem muito largos */
+    margin: 0 auto; /* Centraliza o card individualmente em mobile */
 }
 
 .category-card:hover {
@@ -59,8 +66,6 @@ h1 {
 
 .card-image-container {
     width: 100%;
-    /* Altura da imagem baseada na proporção da imagem original */
-    /* Você pode ajustar conforme a proporção das suas capas */
     padding-bottom: 120%; /* Proporção de 1:1.2 para simular capas de livro/curso */
     position: relative;
     overflow: hidden;
@@ -79,7 +84,7 @@ h1 {
 }
 
 .card-content {
-    padding: 20px;
+    padding: 15px; /* Padding para o conteúdo do card em mobile */
     flex-grow: 1; /* Permite que o conteúdo ocupe o espaço restante */
     display: flex;
     flex-direction: column;
@@ -87,86 +92,102 @@ h1 {
 }
 
 .card-title {
-    font-size: 1.4em;
+    font-size: 1.2em; /* Tamanho do título do card para mobile */
     font-weight: bold;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 8px; /* Margem ajustada */
     color: #4CAF50; /* Cor de destaque para o título do card */
 }
 
 .card-subtitle {
-    font-size: 0.9em;
+    font-size: 0.85em; /* Tamanho da fonte da descrição para mobile */
     color: #bbb;
-    margin-bottom: 10px;
+    margin-bottom: 8px; /* Margem ajustada */
 }
 
 .card-author {
-    font-size: 0.8em;
+    font-size: 0.75em; /* Tamanho da fonte do autor para mobile */
     color: #888;
     margin-top: auto; /* Empurra o autor para o final do card-content */
 }
 
-/* Responsividade */
-@media (max-width: 1024px) {
-    .categories-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 3-4 colunas */
-        gap: 25px;
-    }
-    h1 {
-        font-size: 2.5em;
-    }
-}
+/* --- Media Queries (Ajustes para telas maiores) --- */
 
-@media (max-width: 768px) {
-    .categories-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* 2-3 colunas */
-        gap: 20px;
+/* Telas de tablet e desktops pequenos (a partir de 600px - ideal para 2 colunas) */
+@media (min-width: 600px) {
+    .container {
+        padding: 20px;
     }
     h1 {
-        font-size: 2em;
+        font-size: 2.2em;
         margin-bottom: 30px;
     }
-    .card-title {
-        font-size: 1.2em;
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr); /* FORÇA 2 COLUNAS */
+        gap: 25px;
     }
-    .card-content {
-        padding: 15px;
+    .category-card {
+        max-width: none; /* Remove a largura máxima para que o grid controle */
+    }
+    .card-title {
+        font-size: 1.3em;
+    }
+    .card-subtitle {
+        font-size: 0.9em;
+    }
+    .card-author {
+        font-size: 0.8em;
     }
 }
 
-@media (max-width: 480px) {
-    .categories-grid {
-        grid-template-columns: 1fr; /* Apenas 1 coluna em telas muito pequenas */
-        gap: 20px;
-        padding: 0 10px; /* Padding para não grudar nas bordas */
-    }
-    .container {
-        padding: 15px;
-    }
+/* Telas maiores (a partir de 992px - para 3 colunas, se desejar) */
+@media (min-width: 992px) {
     h1 {
-        font-size: 1.8em;
-        margin-bottom: 25px;
+        font-size: 2.5em;
+        margin-bottom: 40px;
     }
-    .category-card {
-        max-width: 300px; /* Limita a largura em telas muito pequenas */
-        margin: 0 auto; /* Centraliza o card */
+    .categories-grid {
+        grid-template-columns: repeat(3, 1fr); /* FORÇA 3 COLUNAS */
+        gap: 30px;
+    }
+    .card-title {
+        font-size: 1.4em;
+    }
+    .card-content {
+        padding: 20px;
     }
 }
+
+/* Telas de desktop grandes (a partir de 1200px - para 4 colunas, se desejar) */
+@media (min-width: 1200px) {
+    h1 {
+        font-size: 2.8em;
+    }
+    .categories-grid {
+        grid-template-columns: repeat(4, 1fr); /* FORÇA 4 COLUNAS */
+    }
+}
+
+
+/* Estilos do Botão (já estavam bons, apenas algumas pequenas sugestões) */
 .container-Btn {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 30px; /* Aumenta um pouco a margem superior */
+    padding-bottom: 20px; /* Adiciona um padding inferior para o botão não ficar colado */
 }
 .btn-dashboard {
-            background: #40916c;
-            color: #fff;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-        .btn-dashboard:hover {
-            background: #26734d;
-        }
+    background: #40916c;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap; /* Evita que o texto do botão quebre em várias linhas */
+    display: inline-block; /* Garante que o padding e margin funcionem corretamente */
+}
+.btn-dashboard:hover {
+    background: #26734d;
+}
