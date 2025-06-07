@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Categorias de Conteúdo</title>
+    <link rel="stylesheet" href="StyleAulas.css">
+</head>
+<body>
+<!--Botão Voltar-->
+<div class="container-Btn">
+         <a href="Dashboard.html" class="btn-dashboard">Voltar</a>
+    </div>
+<!--Fim do Botão-->
+
+    <div class="container">
+        <h1>Conteúdo em Destaque</h1>
+
+        <div class="categories-grid" id="categoriesGrid">
+            </div>
+    </div>
+
+    <script>
+        // Dados dos cards de conteúdo (você pode adicionar mais aqui!)
+        const categoriesData = [
+            {
+                id: 1,
+                image: 'images/image1.png', // Caminho para a imagem
+                title: 'Alocação Estratégica',
+                subtitle: 'O Caminho para a Riqueza',
+                author: 'Felipe Spitzer',
+                link: '#' // Link para a página ou curso completo
+            },
+            {
+                id: 2,
+                image: 'images/TemasInvest.png',
+                title: 'Indicadores Econômicos dos EUA',
+                subtitle: '',
+                author: 'Richard Camargo',
+                link: '#'
+            },
+            {
+                id: 3,
+                image: 'images/Image3.png',
+                title: 'CMN',
+                subtitle: 'Quem Realmente Comanda o Dinheiro?',
+                author: 'Waldery Rodrigues',
+                link: '#'
+            },
+            {
+                id: 4,
+                image: 'images/Image5.png',
+                title: 'Renda Passiva com Cripto',
+                subtitle: 'O Poder do Staking e Airdrops',
+                author: 'Paulo Camargo',
+                link: '#'
+            },
+            {
+                id: 5,
+                image: 'images/TemasInvest.png',
+                title: 'Finanças Pessoais',
+                subtitle: 'Organize suas contas',
+                author: 'Expert Financeiro',
+                link: '#'
+            },
+            {
+                id: 6,
+                image: 'images/TemasInvest.png',
+                title: 'Investimentos em Ações',
+                subtitle: 'Guia Completo',
+                author: 'Mercado de Valores',
+                link: '#'
+            },
+            {
+                id: 7,
+                image: 'images/Tesouro.png',
+                title: 'Guia do Tesouro ',
+                subtitle: 'Primo Pobre',
+                author: 'Eduardo Dexter',
+                link: '#'
+            },
+            {
+                id: 8,
+                image: 'images/GuiaInvestir.png',
+                title: 'Guia do Investidor',
+                subtitle: 'Invista com Segurança',
+                author: 'Três Investidores',
+                link: '#'
+            }
+        ];
+
+        // Função para criar e adicionar os cards ao grid
+        function createCategoryCards() {
+            const gridContainer = document.getElementById('categoriesGrid');
+            gridContainer.innerHTML = ''; // Limpa qualquer conteúdo existente
+
+            categoriesData.forEach(item => {
+                const card = document.createElement('a'); // Usamos <a> para que o card seja clicável
+                card.href = item.link; // Define o link do card
+                card.classList.add('category-card');
+
+                card.innerHTML = `
+                    <div class="card-image-container">
+                        <img src="${item.image}" alt="${item.title}" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">${item.title}</h2>
+                        ${item.subtitle ? `<p class="card-subtitle">${item.subtitle}</p>` : ''}
+                        ${item.author ? `<p class="card-author">${item.author}</p>` : ''}
+                    </div>
+                `;
+                gridContainer.appendChild(card);
+            });
+        }
+
+        // Chama a função para criar os cards quando a página é carregada
+        document.addEventListener('DOMContentLoaded', createCategoryCards);
+    </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilo tela de login */
+.login-body {
+  background-color: #111;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  background-color: #222;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.login-container h1 {
+  text-align: center;
+}
+
+.login-container input, .login-container button {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0.5rem;
+}
+
+.login-container button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Estilo da tela de dashboard */
+.dashboard-body {
+  background-color: #111;
+  color: #fff;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1c1c1c;
+  padding: 1rem 2rem;
+}
+
+.topbar .logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.topbar nav a {
+  color: #fff;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.topbar .user {
+  font-size: 1rem;
+}
+
+.main-content {
+  padding: 2rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.video-grid {
+  display: flex;
+  gap: 1rem;
+}
+
+.video-card {
+  background-color: #222;
+  border-radius: 10px;
+  width: 300px;
+  height: 180px;
+  overflow: hidden;
+  padding: 0;
+}
+.video-card iframe {
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+
+.form-movimento input, .form-movimento select, .form-movimento button {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.form-movimento {
+  max-width: 300px;
+}
+
+#listaTransacoes {
+  list-style: none;
+  padding: 0;
+}
+
+#listaTransacoes li {
+  background-color: #222;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-left: 5px solid;
+}
+
+#listaTransacoes li.entrada {
+  border-color: #4caf50;
+}
+
+#listaTransacoes li.saida {
+  border-color: #f44336;
+}
+
+.resumo {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+/* Estilos gerais para o corpo */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a; /* Fundo escuro como na imagem */
+    color: #f0f0f0; /* Cor do texto claro */
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para o cabeçalho (nav) - ajustar conforme seu layout */
+nav {
+    background-color: #282828;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: #f0f0f0;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1rem;
+}
+
+nav a:hover {
+    color: #aaa;
+}
+
+.header-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.section-title { /* Para os subtítulos como "Aulas", "Dicas do Dia" */
+    font-size: 2em;
+    color: #e0e0e0;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: left;
+    padding-left: 20px; /* Alinha com o conteúdo */
+}
+
+/* Container principal para as seções */
+.main-content {
+    padding: 20px;
+    max-width: 1200px; /* Limita a largura do conteúdo principal */
+    margin: 0 auto; /* Centraliza o conteúdo */
+}
+
+
+/* Estilos para a seção de vídeos */
+.video-section {
+    margin-bottom: 40px;
+}
+
+.video-carousel {
+    display: flex;
+    overflow-x: auto; /* Permite a rolagem horizontal */
+    scroll-snap-type: x mandatory; /* Faz com que os itens "encaixem" na rolagem */
+    -webkit-overflow-scrolling: touch; /* Melhora a rolagem em dispositivos iOS */
+    gap: 20px; /* Espaçamento entre os vídeos */
+    padding-bottom: 15px; /* Espaço para a barra de rolagem */
+}
+
+.video-carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.video-carousel::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 10px;
+}
+
+.video-carousel::-webkit-scrollbar-track {
+    background-color: #282828;
+}
+
+.video-item {
+    flex: 0 0 auto; /* Não cresce nem encolhe, largura automática */
+    width: 320px; /* Largura padrão para cada vídeo */
+    height: 240px; /* Altura total do item, iframe + botão */
+    background-color: #282828;
+    border-radius: 8px;
+    overflow: hidden; /* Garante que o iframe não saia */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    scroll-snap-align: start; /* O item se alinha ao início da rolagem */
+    display: flex;
+    flex-direction: column;
+}
+
+.video-item iframe {
+    width: 100%;
+    height: 180px; /* Altura fixa do iframe */
+    border: none;
+}
+
+.video-item .watch-on-youtube {
+    display: block;
+    background-color: #c00; /* Cor do YouTube */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.video-item .watch-on-youtube:hover {
+    background-color: #a00;
+}
+
+/* Responsividade para vídeos */
+@media (max-width: 768px) {
+    .video-item {
+        width: 90vw; /* Ocupa 90% da largura da viewport em telas menores */
+        height: auto;
+    }
+    .video-item iframe {
+        height: calc(90vw * 9 / 16); /* Mantém a proporção 16:9 para o vídeo */
+    }
+}
+
+
+
+/* Estilos para a seção de Dicas do Dia */
+.tips-section {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.tip-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Colunas responsivas */
+    gap: 20px;
+    padding: 0 20px; /* Alinha com o padding do main-content */
+}
+
+.tip-card {
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    color: #f0f0f0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.tip-card h3 {
+    color: #4CAF50; /* Uma cor de destaque para o título da dica */
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.tip-card p {
+    font-size: 0.95em;
+    line-height: 1.5;
+}

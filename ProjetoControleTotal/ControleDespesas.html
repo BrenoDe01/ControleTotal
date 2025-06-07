@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Despesas Interativo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <header class="topbar">
+    
+    <nav>
+      <a href="Dashboard.html">Voltar</a>
+    </nav>
+  </header>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        #app-container {
+            display: flex;
+            flex-direction: row; /* Alterado para row para layout lado a lado */
+            gap: 40px;
+            max-width: 1200px; /* Aumenta a largura máxima para acomodar os dois lados */
+            width: 100%;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
+            justify-content: center; /* Centraliza os itens quando quebrarem a linha */
+        }
+
+        #form-section, #chart-section {
+            flex: 1; /* Permite que cada seção ocupe o espaço disponível */
+            min-width: 300px; /* Garante uma largura mínima para cada seção */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="number"],
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: calc(100% - 22px); /* Ajusta a largura considerando o padding e border */
+            box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #chart-container {
+            width: 100%;
+            max-width: 500px; /* Define uma largura máxima para o gráfico */
+            height: auto; /* A altura se ajustará automaticamente */
+            margin: auto; /* Centraliza o gráfico dentro de sua seção */
+        }
+
+        #expenses-list-container {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 600px; /* Largura máxima para a lista de despesas */
+        }
+
+        #expenses-list h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #expenses-list ul {
+            list-style: none;
+            padding: 0;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        #expenses-list li {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.05rem;
+        }
+
+        #expenses-list li:last-child {
+            border-bottom: none;
+        }
+
+        #expenses-list li span:first-child {
+            font-weight: bold;
+        }
+
+        #expenses-list li .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #expenses-list li .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            #app-container {
+                flex-direction: column; /* Pilha os itens em telas menores */
+                gap: 20px;
+            }
+            #form-section, #chart-section {
+                min-width: unset; /* Remove a largura mínima para flexibilidade */
+            }
+            #chart-container {
+                max-width: 100%; /* Permite que o gráfico ocupe toda a largura disponível */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Controle de Despesas</h1>
+
+    <div id="app-container">
+        <section id="form-section">
+            <h2>Adicionar Novo Lançamento</h2>
+            <form id="expense-form">
+                <label for="category">Categoria:</label>
+                <select id="category" required>
+                    <option value="">Selecione uma categoria</option>
+                    <option value="Compras">Compras</option>
+                    <option value="Streaming">Streaming</option>
+                    <option value="Farmácia">Farmácia</option>
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Educação">Educação</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Moradia">Moradia</option>
+                    </select>
+
+                <label for="value">Valor (R$):</label>
+                <input type="number" id="value" step="0.01" required>
+
+                <button type="submit">Adicionar Lançamento</button>
+            </form>
+        </section>
+
+        <section id="chart-section">
+            <h2>Gráfico de Despesas</h2>
+            <div id="chart-container">
+                <canvas id="myPieChart"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <div id="expenses-list-container">
+        <section id="expenses-list">
+            <h2>Lançamentos Recentes</h2>
+            <ul id="expense-items">
+                </ul>
+        </section>
+    </div>
+
+    <script>
+        const expenseForm = document.getElementById('expense-form');
+        const categorySelect = document.getElementById('category');
+        const valueInput = document.getElementById('value');
+        const expenseItemsList = document.getElementById('expense-items');
+
+        // Carregar despesas do localStorage (se houver) ou iniciar vazio
+        let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+        // Inicializa o gráfico (apenas uma vez)
+        const ctx = document.getElementById('myPieChart').getContext('2d');
+        const myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [], // As categorias serão adicionadas aqui
+                datasets: [{
+                    data: [], // Os valores serão adicionados aqui
+                    backgroundColor: [ // Cores para os setores
+                        'rgba(255, 99, 132, 0.8)', // Vermelho
+                        'rgba(54, 162, 235, 0.8)', // Azul
+                        'rgba(255, 206, 86, 0.8)', // Amarelo
+                        'rgba(75, 192, 192, 0.8)', // Verde Água
+                        'rgba(153, 102, 255, 0.8)', // Roxo
+                        'rgba(255, 159, 64, 0.8)', // Laranja
+                        'rgba(200, 200, 200, 0.8)',// Cinza
+                        'rgba(100, 255, 100, 0.8)',// Verde Claro
+                        'rgba(255, 100, 255, 0.8)' // Rosa
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(200, 200, 200, 1)',
+                        'rgba(100, 255, 100, 1)',
+                        'rgba(255, 100, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Permite que o gráfico se ajuste melhor
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+                                    const percentage = (context.parsed / total * 100).toFixed(2);
+                                    label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed) + ` (${percentage}%)`;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Função para atualizar o gráfico e a lista de lançamentos
+        function updateDisplay() {
+            const categories = {}; // Objeto para agrupar valores por categoria
+
+            // Agrupa os valores por categoria
+            expenses.forEach(expense => {
+                if (categories[expense.category]) {
+                    categories[expense.category] += expense.value;
+                } else {
+                    categories[expense.category] = expense.value;
+                }
+            });
+
+            // Prepara os dados para o Chart.js
+            myPieChart.data.labels = Object.keys(categories);
+            myPieChart.data.datasets[0].data = Object.values(categories);
+            myPieChart.update(); // Atualiza o gráfico
+
+            // Atualiza a lista de lançamentos
+            renderExpensesList();
+
+            // Salva as despesas no localStorage
+            localStorage.setItem('expenses', JSON.stringify(expenses));
+        }
+
+        // Função para renderizar a lista de lançamentos
+        function renderExpensesList() {
+            expenseItemsList.innerHTML = ''; // Limpa a lista existente
+
+            if (expenses.length === 0) {
+                expenseItemsList.innerHTML = '<li>Nenhum lançamento adicionado ainda.</li>';
+                return;
+            }
+
+            expenses.forEach((expense, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span>${expense.category}:</span>
+                    <span>${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(expense.value)}</span>
+                    <button class="delete-btn" data-index="${index}">Remover</button>
+                `;
+                expenseItemsList.appendChild(listItem);
+            });
+
+            // Adiciona event listeners para os botões de remover
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const indexToRemove = parseInt(e.target.dataset.index);
+                    expenses.splice(indexToRemove, 1); // Remove o item do array
+                    updateDisplay(); // Atualiza o gráfico e a lista
+                });
+            });
+        }
+
+
+        // Evento de submissão do formulário
+        expenseForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Evita o recarregamento da página
+
+            const category = categorySelect.value;
+            const value = parseFloat(valueInput.value);
+
+            if (category && !isNaN(value) && value > 0) {
+                expenses.push({ category, value });
+                updateDisplay(); // Chama a função para atualizar o gráfico e a lista
+                expenseForm.reset(); // Limpa o formulário
+                categorySelect.focus(); // Retorna o foco para a categoria
+            } else {
+                alert('Por favor, preencha a categoria e um valor válido (maior que zero).');
+            }
+        });
+
+        // Chama a função pela primeira vez para exibir o gráfico e a lista com dados iniciais (se houver)
+        updateDisplay();
+    </script>
+</body>
+</html>
