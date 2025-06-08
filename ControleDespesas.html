@@ -3,168 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfico de Despesas Interativo</title>
+    <title>Controle de Despesas e Metas</title>
+    <!-- Inclui a biblioteca Chart.js para gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <header class="topbar">
-    
-    <nav>
-      <a href="Dashboard.html">Voltar</a>
-    </nav>
-  </header>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background-color: #f4f7f6;
-            color: #333;
-        }
-
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-
-        #app-container {
-            display: flex;
-            flex-direction: row; /* Alterado para row para layout lado a lado */
-            gap: 40px;
-            max-width: 1200px; /* Aumenta a largura máxima para acomodar os dois lados */
-            width: 100%;
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
-            justify-content: center; /* Centraliza os itens quando quebrarem a linha */
-        }
-
-        #form-section, #chart-section {
-            flex: 1; /* Permite que cada seção ocupe o espaço disponível */
-            min-width: 300px; /* Garante uma largura mínima para cada seção */
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #fdfdfd;
-        }
-
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        input[type="number"],
-        select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            width: calc(100% - 22px); /* Ajusta a largura considerando o padding e border */
-            box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
-        }
-
-        button {
-            background-color: #28a745;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        #chart-container {
-            width: 100%;
-            max-width: 500px; /* Define uma largura máxima para o gráfico */
-            height: auto; /* A altura se ajustará automaticamente */
-            margin: auto; /* Centraliza o gráfico dentro de sua seção */
-        }
-
-        #expenses-list-container {
-            margin-top: 30px;
-            width: 100%;
-            max-width: 600px; /* Largura máxima para a lista de despesas */
-        }
-
-        #expenses-list h2 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        #expenses-list ul {
-            list-style: none;
-            padding: 0;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            background-color: #fdfdfd;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        #expenses-list li {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.05rem;
-        }
-
-        #expenses-list li:last-child {
-            border-bottom: none;
-        }
-
-        #expenses-list li span:first-child {
-            font-weight: bold;
-        }
-
-        #expenses-list li .delete-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 6px 10px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background-color 0.3s ease;
-        }
-
-        #expenses-list li .delete-btn:hover {
-            background-color: #c82333;
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            #app-container {
-                flex-direction: column; /* Pilha os itens em telas menores */
-                gap: 20px;
-            }
-            #form-section, #chart-section {
-                min-width: unset; /* Remove a largura mínima para flexibilidade */
-            }
-            #chart-container {
-                max-width: 100%; /* Permite que o gráfico ocupe toda a largura disponível */
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="StyleControlDespesas.css">
 </head>
 <body>
-    <h1>Controle de Despesas</h1>
+    <!-- HEADER -->
+    <header class="topbar">
+        <nav>
+            <a href="Dashboard.html">Voltar</a>
+        </nav>
+    </header>
 
+    <h1>Controle Financeiro</h1>
+
+    <!-- Saldo Atual e Adicionar Salário -->
+    <div id="balance-container">
+        <section id="balance-section">
+            <h2>Seu Saldo Atual</h2>
+            <p id="current-balance-display">R$ 0,00</p>
+            <div id="add-salary-form-container">
+                <h3>Registrar Salário/Renda</h3>
+                <form id="salary-form">
+                    <label for="salary-amount">Valor (R$):</label>
+                    <input type="number" id="salary-amount" step="0.01" required>
+                    <button type="submit">Atualizar Renda</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Container Principal: Formulário de Despesas e Gráfico -->
     <div id="app-container">
         <section id="form-section">
             <h2>Adicionar Novo Lançamento</h2>
@@ -181,7 +51,7 @@
                     <option value="Educação">Educação</option>
                     <option value="Saúde">Saúde</option>
                     <option value="Moradia">Moradia</option>
-                    </select>
+                </select>
 
                 <label for="value">Valor (R$):</label>
                 <input type="number" id="value" step="0.01" required>
@@ -198,51 +68,215 @@
         </section>
     </div>
 
+    <!-- Lançamentos Recentes com Filtro por Categoria -->
     <div id="expenses-list-container">
         <section id="expenses-list">
             <h2>Lançamentos Recentes</h2>
+            <div id="expenses-filter-container">
+                <label for="expense-category-filter">Filtrar por Categoria:</label>
+                <select id="expense-category-filter">
+                    <option value="all">Todas as Categorias</option>
+                    <option value="Compras">Compras</option>
+                    <option value="Streaming">Streaming</option>
+                    <option value="Farmácia">Farmácia</option>
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Educação">Educação</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Moradia">Moradia</option>
+                </select>
+            </div>
             <ul id="expense-items">
+                <!-- Lançamentos serão renderizados aqui -->
+            </ul>
+        </section>
+    </div>
+
+    <!-- Orçamento por Categoria -->
+    <div id="budgets-container">
+        <section id="budgets-section">
+            <h2>Orçamentos por Categoria</h2>
+            <div id="add-budget-form-container">
+                <h3>Definir Orçamento</h3>
+                <form id="budget-form">
+                    <label for="budget-category">Categoria:</label>
+                    <select id="budget-category" required>
+                        <option value="">Selecione uma categoria</option>
+                        <option value="Compras">Compras</option>
+                        <option value="Streaming">Streaming</option>
+                        <option value="Farmácia">Farmácia</option>
+                        <option value="Alimentação">Alimentação</option>
+                        <option value="Transporte">Transporte</option>
+                        <option value="Lazer">Lazer</option>
+                        <option value="Educação">Educação</option>
+                        <option value="Saúde">Saúde</option>
+                        <option value="Moradia">Moradia</option>
+                    </select>
+                    <label for="budget-limit">Limite Mensal (R$):</label>
+                    <input type="number" id="budget-limit" step="0.01" required>
+                    <button type="submit">Definir Orçamento</button>
+                </form>
+            </div>
+            <div id="current-budgets-list-container">
+                <h3>Orçamentos Atuais</h3>
+                <ul id="budgets-list">
+                    <!-- Orçamentos serão renderizados aqui -->
                 </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Minhas Metas com Filtro por Status -->
+    <div id="goals-container">
+        <section id="goals-section">
+            <h2>Minhas Metas</h2>
+            <div id="add-goal-form-container">
+                <h3>Definir Nova Meta</h3>
+                <form id="goal-form">
+                    <label for="goalName">Nome da Meta:</label>
+                    <input type="text" id="goalName" required>
+
+                    <label for="goalTarget">Valor da Meta (R$):</label>
+                    <input type="number" id="goalTarget" step="0.01" required>
+
+                    <button type="submit">Adicionar Meta</button>
+                </form>
+            </div>
+            <div id="current-goals-list-container">
+                <h3>Metas Atuais</h3>
+                <div id="goals-filter-container">
+                    <label for="goal-status-filter">Filtrar por Status:</label>
+                    <select id="goal-status-filter">
+                        <option value="all">Todas as Metas</option>
+                        <option value="achieved">Atingidas</option>
+                        <option value="not-achieved">Não Atingidas</option>
+                    </select>
+                </div>
+                <ul id="goal-items">
+                    <!-- Metas serão renderizadas aqui -->
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Resumo Mensal de Despesas -->
+    <div id="monthly-summary-container">
+        <section id="monthly-summary-section">
+            <h2>Resumo Mensal de Despesas</h2>
+            <div id="month-selector-container">
+                <label for="month-selector">Selecione o Mês:</label>
+                <select id="month-selector">
+                    <!-- Opções de mês serão preenchidas via JS -->
+                </select>
+            </div>
+            <ul id="monthly-summary-list">
+                <!-- Resumo será renderizado aqui -->
+            </ul>
         </section>
     </div>
 
     <script>
+        // --- Helpers Globais ---
+        const formatCurrency = (value) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+        const getMonthName = (monthIndex) => {
+            const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+            return months[monthIndex];
+        };
+
+        // --- Função de Mensagem Personalizada (substitui alert) ---
+        function displayMessage(message, type = 'success') {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+            messageDiv.classList.add('custom-message');
+            if (type === 'error') {
+                messageDiv.classList.add('error');
+            } else if (type === 'info') {
+                messageDiv.classList.add('info');
+            }
+            document.body.appendChild(messageDiv);
+
+            // Animação de entrada
+            setTimeout(() => {
+                messageDiv.style.opacity = 1;
+            }, 10);
+
+            // Animação de saída e remoção
+            setTimeout(() => {
+                messageDiv.style.opacity = 0;
+                messageDiv.addEventListener('transitionend', () => messageDiv.remove());
+            }, 3000);
+        }
+
+        // --- Gerenciamento de Saldo/Renda ---
+        const balanceDisplay = document.getElementById('current-balance-display');
+        const salaryForm = document.getElementById('salary-form');
+        const salaryAmountInput = document.getElementById('salary-amount');
+        let income = parseFloat(localStorage.getItem('income')) || 0;
+        let totalExpenses = 0;
+        let currentBalance = 0;
+
+        function updateTotalExpensesValue() {
+            totalExpenses = expenses.reduce((sum, expense) => sum + expense.value, 0);
+        }
+
+        function updateBalanceDisplay() {
+            updateTotalExpensesValue(); // Primeiro calcula o total de despesas
+            currentBalance = income - totalExpenses;
+            balanceDisplay.textContent = formatCurrency(currentBalance);
+
+            // Mudar cor do saldo se for negativo
+            if (currentBalance < 0) {
+                balanceDisplay.classList.add('negative-balance');
+            } else {
+                balanceDisplay.classList.remove('negative-balance');
+            }
+            localStorage.setItem('income', income); // Salva a renda atual
+        }
+
+        salaryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newIncome = parseFloat(salaryAmountInput.value);
+
+            if (!isNaN(newIncome) && newIncome >= 0) {
+                income = newIncome; // Sobrescreve a renda com o novo valor
+                updateBalanceDisplay();
+                salaryAmountInput.value = '';
+                displayMessage('Renda atualizada com sucesso!', 'success');
+            } else {
+                displayMessage('Por favor, insira um valor de renda válido.', 'error');
+            }
+        });
+
+        // --- Gerenciamento de Despesas ---
         const expenseForm = document.getElementById('expense-form');
         const categorySelect = document.getElementById('category');
         const valueInput = document.getElementById('value');
         const expenseItemsList = document.getElementById('expense-items');
+        const expenseCategoryFilter = document.getElementById('expense-category-filter');
 
-        // Carregar despesas do localStorage (se houver) ou iniciar vazio
         let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 
-        // Inicializa o gráfico (apenas uma vez)
+        // Inicializa o gráfico Chart.js
         const ctx = document.getElementById('myPieChart').getContext('2d');
         const myPieChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: [], // As categorias serão adicionadas aqui
+                labels: [],
                 datasets: [{
-                    data: [], // Os valores serão adicionados aqui
-                    backgroundColor: [ // Cores para os setores
-                        'rgba(255, 99, 132, 0.8)', // Vermelho
-                        'rgba(54, 162, 235, 0.8)', // Azul
-                        'rgba(255, 206, 86, 0.8)', // Amarelo
-                        'rgba(75, 192, 192, 0.8)', // Verde Água
-                        'rgba(153, 102, 255, 0.8)', // Roxo
-                        'rgba(255, 159, 64, 0.8)', // Laranja
-                        'rgba(200, 200, 200, 0.8)',// Cinza
-                        'rgba(100, 255, 100, 0.8)',// Verde Claro
-                        'rgba(255, 100, 255, 0.8)' // Rosa
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)', 'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)', 'rgba(255, 159, 64, 0.8)',
+                        'rgba(200, 200, 200, 0.8)', 'rgba(100, 255, 100, 0.8)',
+                        'rgba(255, 100, 255, 0.8)'
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(200, 200, 200, 1)',
-                        'rgba(100, 255, 100, 1)',
+                        'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)',
+                        'rgba(200, 200, 200, 1)', 'rgba(100, 255, 100, 1)',
                         'rgba(255, 100, 255, 1)'
                     ],
                     borderWidth: 1
@@ -250,7 +284,7 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Permite que o gráfico se ajuste melhor
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'top',
@@ -270,7 +304,7 @@
                                 if (context.parsed !== null) {
                                     const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
                                     const percentage = (context.parsed / total * 100).toFixed(2);
-                                    label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed) + ` (${percentage}%)`;
+                                    label += formatCurrency(context.parsed) + ` (${percentage}%)`;
                                 }
                                 return label;
                             }
@@ -280,11 +314,10 @@
             }
         });
 
-        // Função para atualizar o gráfico e a lista de lançamentos
-        function updateDisplay() {
-            const categories = {}; // Objeto para agrupar valores por categoria
+        // Função para atualizar o gráfico e a lista de lançamentos de despesas
+        function updateExpensesDisplay() {
+            const categories = {};
 
-            // Agrupa os valores por categoria
             expenses.forEach(expense => {
                 if (categories[expense.category]) {
                     categories[expense.category] += expense.value;
@@ -293,67 +326,622 @@
                 }
             });
 
-            // Prepara os dados para o Chart.js
             myPieChart.data.labels = Object.keys(categories);
             myPieChart.data.datasets[0].data = Object.values(categories);
-            myPieChart.update(); // Atualiza o gráfico
+            myPieChart.update();
 
-            // Atualiza a lista de lançamentos
             renderExpensesList();
-
-            // Salva as despesas no localStorage
             localStorage.setItem('expenses', JSON.stringify(expenses));
+            populateMonthSelector(); // Atualiza os meses disponíveis no seletor
+            generateMonthlySummary(); // Atualiza o resumo mensal
+            updateBalanceDisplay(); // Atualiza o saldo após a despesa
         }
 
-        // Função para renderizar a lista de lançamentos
+        // Função para renderizar a lista de lançamentos de despesas
         function renderExpensesList() {
-            expenseItemsList.innerHTML = ''; // Limpa a lista existente
+            expenseItemsList.innerHTML = '';
+            const filterCategory = expenseCategoryFilter.value;
 
-            if (expenses.length === 0) {
-                expenseItemsList.innerHTML = '<li>Nenhum lançamento adicionado ainda.</li>';
+            // Filtra as despesas com base na categoria selecionada
+            const filteredExpenses = expenses.filter(expense =>
+                filterCategory === 'all' || expense.category === filterCategory
+            );
+
+            // Ordena as despesas da mais recente para a mais antiga
+            const sortedExpenses = [...filteredExpenses].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (sortedExpenses.length === 0) {
+                expenseItemsList.innerHTML = `<li>Nenhum lançamento ${filterCategory !== 'all' ? `para "${filterCategory}"` : ''} adicionado ainda.</li>`;
                 return;
             }
 
-            expenses.forEach((expense, index) => {
+            sortedExpenses.forEach((expense, index) => {
+                const originalIndex = expenses.indexOf(expense); // Pega o índice original do array "expenses"
                 const listItem = document.createElement('li');
+                const expenseDate = new Date(expense.date);
+                const formattedDate = `${expenseDate.getDate().toString().padStart(2, '0')}/${(expenseDate.getMonth() + 1).toString().padStart(2, '0')}/${expenseDate.getFullYear()}`;
+
                 listItem.innerHTML = `
-                    <span>${expense.category}:</span>
-                    <span>${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(expense.value)}</span>
-                    <button class="delete-btn" data-index="${index}">Remover</button>
+                    <div class="expense-info">
+                        <span>${expense.category} (${formattedDate}):</span>
+                        <span>${formatCurrency(expense.value)}</span>
+                    </div>
+                    <div class="actions">
+                        <button class="action-btn edit-btn" data-index="${originalIndex}">Editar</button>
+                        <button class="action-btn delete-btn" data-index="${originalIndex}">Remover</button>
+                    </div>
+                    <!-- Formulário de Edição (inicialmente escondido) -->
+                    <div class="edit-form" data-index="${originalIndex}">
+                        <label for="edit-category-${originalIndex}">Categoria:</label>
+                        <select id="edit-category-${originalIndex}" class="edit-category-select">
+                            <option value="Compras">Compras</option>
+                            <option value="Streaming">Streaming</option>
+                            <option value="Farmácia">Farmácia</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Moradia">Moradia</option>
+                        </select>
+                        <label for="edit-value-${originalIndex}">Valor (R$):</label>
+                        <input type="number" id="edit-value-${originalIndex}" step="0.01" class="edit-value-input">
+                        <div class="form-actions">
+                            <button class="action-btn confirm-btn">Confirmar</button>
+                            <button class="action-btn cancel-btn">Cancelar</button>
+                        </div>
+                    </div>
                 `;
                 expenseItemsList.appendChild(listItem);
+
+                // Preenche o seletor de categoria no formulário de edição
+                listItem.querySelector(`#edit-category-${originalIndex}`).value = expense.category;
             });
 
-            // Adiciona event listeners para os botões de remover
-            document.querySelectorAll('.delete-btn').forEach(button => {
+            // Event Listeners para botões de Remover Despesa
+            document.querySelectorAll('#expense-items .delete-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    const indexToRemove = parseInt(e.target.dataset.index);
-                    expenses.splice(indexToRemove, 1); // Remove o item do array
-                    updateDisplay(); // Atualiza o gráfico e a lista
+                    const originalIndexToRemove = parseInt(e.target.dataset.index);
+                    expenses.splice(originalIndexToRemove, 1);
+                    updateExpensesDisplay();
+                    displayMessage('Lançamento removido com sucesso!', 'success');
+                });
+            });
+
+            // Event Listeners para botões Editar Despesa
+            document.querySelectorAll('#expense-items .edit-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    const listItem = e.target.closest('li');
+                    const form = listItem.querySelector('.edit-form');
+                    const currentExpense = expenses[index];
+
+                    // Preenche o formulário com os dados atuais
+                    form.querySelector('.edit-category-select').value = currentExpense.category;
+                    form.querySelector('.edit-value-input').value = currentExpense.value;
+
+                    form.classList.add('active'); // Mostra o formulário
+                    form.querySelector('.edit-value-input').focus();
+                });
+            });
+
+            // Event Listeners para Confirmar Edição de Despesa
+            document.querySelectorAll('#expense-items .edit-form .confirm-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const form = e.target.closest('.edit-form');
+                    const index = parseInt(form.dataset.index);
+                    const newCategory = form.querySelector('.edit-category-select').value;
+                    const newValue = parseFloat(form.querySelector('.edit-value-input').value);
+
+                    if (newCategory && !isNaN(newValue) && newValue > 0) {
+                        expenses[index].category = newCategory;
+                        expenses[index].value = newValue;
+                        updateExpensesDisplay();
+                        displayMessage('Lançamento atualizado com sucesso!', 'success');
+                        form.classList.remove('active');
+                    } else {
+                        displayMessage('Por favor, preencha a categoria e um valor válido.', 'error');
+                    }
+                });
+            });
+
+            // Event Listeners para Cancelar Edição de Despesa
+            document.querySelectorAll('#expense-items .edit-form .cancel-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const form = e.target.closest('.edit-form');
+                    form.classList.remove('active');
                 });
             });
         }
 
-
-        // Evento de submissão do formulário
+        // Evento de submissão do formulário de despesas
         expenseForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Evita o recarregamento da página
+            e.preventDefault();
 
             const category = categorySelect.value;
             const value = parseFloat(valueInput.value);
+            const date = new Date().toISOString().slice(0, 10); // Armazena a data atual (YYYY-MM-DD)
 
             if (category && !isNaN(value) && value > 0) {
-                expenses.push({ category, value });
-                updateDisplay(); // Chama a função para atualizar o gráfico e a lista
-                expenseForm.reset(); // Limpa o formulário
-                categorySelect.focus(); // Retorna o foco para a categoria
+                expenses.push({ category, value, date });
+                updateExpensesDisplay();
+                expenseForm.reset();
+                categorySelect.focus();
+                displayMessage('Lançamento adicionado com sucesso!', 'success');
             } else {
-                alert('Por favor, preencha a categoria e um valor válido (maior que zero).');
+                displayMessage('Por favor, preencha a categoria e um valor válido para a despesa (maior que zero).', 'error');
             }
         });
 
-        // Chama a função pela primeira vez para exibir o gráfico e a lista com dados iniciais (se houver)
-        updateDisplay();
+        // Event Listener para o filtro de categoria de despesas
+        expenseCategoryFilter.addEventListener('change', updateExpensesDisplay);
+
+
+        // --- Gerenciamento de Orçamentos por Categoria ---
+        const budgetForm = document.getElementById('budget-form');
+        const budgetCategorySelect = document.getElementById('budget-category');
+        const budgetLimitInput = document.getElementById('budget-limit');
+        const budgetsList = document.getElementById('budgets-list');
+
+        let budgets = JSON.parse(localStorage.getItem('budgets')) || [];
+
+        function updateBudgetsDisplay() {
+            budgetsList.innerHTML = '';
+
+            if (budgets.length === 0) {
+                budgetsList.innerHTML = '<li>Nenhum orçamento definido ainda.</li>';
+                return;
+            }
+
+            budgets.forEach((budget, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <div class="budget-info">
+                        <span class="budget-name">${budget.category}:</span>
+                        <span class="budget-limit">${formatCurrency(budget.limit)}</span>
+                    </div>
+                    <div class="actions">
+                        <button class="action-btn edit-btn" data-index="${index}">Editar</button>
+                        <button class="action-btn delete-btn" data-index="${index}">Remover</button>
+                    </div>
+                    <!-- Formulário de Edição (inicialmente escondido) -->
+                    <div class="edit-form" data-index="${index}">
+                        <label for="edit-budget-category-${index}">Categoria:</label>
+                        <select id="edit-budget-category-${index}" class="edit-budget-category-select">
+                            <option value="Compras">Compras</option>
+                            <option value="Streaming">Streaming</option>
+                            <option value="Farmácia">Farmácia</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Moradia">Moradia</option>
+                        </select>
+                        <label for="edit-budget-limit-${index}">Limite Mensal (R$):</label>
+                        <input type="number" id="edit-budget-limit-${index}" step="0.01" class="edit-budget-limit-input">
+                        <div class="form-actions">
+                            <button class="action-btn confirm-btn">Confirmar</button>
+                            <button class="action-btn cancel-btn">Cancelar</button>
+                        </div>
+                    </div>
+                `;
+                budgetsList.appendChild(listItem);
+
+                // Preenche o seletor de categoria no formulário de edição
+                listItem.querySelector(`#edit-budget-category-${index}`).value = budget.category;
+            });
+
+            // Event Listeners para botões de Remover Orçamento
+            document.querySelectorAll('#budgets-list .delete-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const indexToRemove = parseInt(e.target.dataset.index);
+                    budgets.splice(indexToRemove, 1);
+                    updateBudgetsDisplay();
+                    generateMonthlySummary(); // Re-gerar resumo para refletir a mudança
+                    displayMessage('Orçamento removido com sucesso!', 'success');
+                });
+            });
+
+            // Event Listeners para botões Editar Orçamento
+            document.querySelectorAll('#budgets-list .edit-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    const listItem = e.target.closest('li');
+                    const form = listItem.querySelector('.edit-form');
+                    const currentBudget = budgets[index];
+
+                    form.querySelector('.edit-budget-category-select').value = currentBudget.category;
+                    form.querySelector('.edit-budget-limit-input').value = currentBudget.limit;
+
+                    form.classList.add('active');
+                    form.querySelector('.edit-budget-limit-input').focus();
+                });
+            });
+
+            // Event Listeners para Confirmar Edição de Orçamento
+            document.querySelectorAll('#budgets-list .edit-form .confirm-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const form = e.target.closest('.edit-form');
+                    const index = parseInt(form.dataset.index);
+                    const newCategory = form.querySelector('.edit-budget-category-select').value;
+                    const newLimit = parseFloat(form.querySelector('.edit-budget-limit-input').value);
+
+                    if (newCategory && !isNaN(newLimit) && newLimit >= 0) {
+                        // Verifica se a categoria já existe para outro orçamento
+                        const existingBudgetIndex = budgets.findIndex((b, i) => b.category === newCategory && i !== index);
+                        if (existingBudgetIndex !== -1) {
+                            displayMessage('Já existe um orçamento para esta categoria. Por favor, edite o existente ou escolha outra categoria.', 'error');
+                            return;
+                        }
+
+                        budgets[index].category = newCategory;
+                        budgets[index].limit = newLimit;
+                        updateBudgetsDisplay();
+                        generateMonthlySummary(); // Re-gerar resumo para refletir a mudança
+                        displayMessage('Orçamento atualizado com sucesso!', 'success');
+                        form.classList.remove('active');
+                    } else {
+                        displayMessage('Por favor, preencha a categoria e um limite válido (maior ou igual a zero).', 'error');
+                    }
+                });
+            });
+
+            // Event Listeners para Cancelar Edição de Orçamento
+            document.querySelectorAll('#budgets-list .edit-form .cancel-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const form = e.target.closest('.edit-form');
+                    form.classList.remove('active');
+                });
+            });
+
+            localStorage.setItem('budgets', JSON.stringify(budgets));
+            generateMonthlySummary(); // Atualiza o resumo mensal com os novos orçamentos
+        }
+
+        budgetForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const category = budgetCategorySelect.value;
+            const limit = parseFloat(budgetLimitInput.value);
+
+            if (category && !isNaN(limit) && limit >= 0) {
+                // Verifica se já existe um orçamento para esta categoria
+                const existingBudgetIndex = budgets.findIndex(b => b.category === category);
+                if (existingBudgetIndex !== -1) {
+                    displayMessage('Já existe um orçamento para esta categoria. Por favor, edite o orçamento existente.', 'error');
+                    return;
+                }
+
+                budgets.push({ category, limit });
+                updateBudgetsDisplay();
+                budgetForm.reset();
+                budgetCategorySelect.focus();
+                displayMessage('Orçamento definido com sucesso!', 'success');
+            } else {
+                displayMessage('Por favor, selecione uma categoria e um limite válido (maior ou igual a zero).', 'error');
+            }
+        });
+
+
+        // --- Gerenciamento de Metas ---
+        const goalForm = document.getElementById('goal-form');
+        const goalNameInput = document.getElementById('goalName');
+        const goalTargetInput = document.getElementById('goalTarget');
+        const goalItemsList = document.getElementById('goal-items');
+        const goalStatusFilter = document.getElementById('goal-status-filter');
+
+        let goals = JSON.parse(localStorage.getItem('goals')) || [];
+
+        // Função para atualizar a exibição das metas
+        function updateGoalsDisplay() {
+            goalItemsList.innerHTML = '';
+            const filterStatus = goalStatusFilter.value;
+
+            // Filtra as metas com base no status selecionado
+            const filteredGoals = goals.filter(goal => {
+                const isCompleted = (goal.currentProgress || 0) >= goal.targetValue;
+                if (filterStatus === 'achieved') return isCompleted;
+                if (filterStatus === 'not-achieved') return !isCompleted;
+                return true; // 'all'
+            });
+
+            if (filteredGoals.length === 0) {
+                goalItemsList.innerHTML = `<li>Nenhuma meta ${filterStatus === 'achieved' ? 'atingida' : (filterStatus === 'not-achieved' ? 'não atingida' : '')} definida ainda.</li>`;
+                return;
+            }
+
+            filteredGoals.forEach((goal, index) => {
+                const originalIndex = goals.indexOf(goal); // Pega o índice original do array "goals"
+                const listItem = document.createElement('li');
+                const formattedTarget = formatCurrency(goal.targetValue);
+                const currentProgress = goal.currentProgress || 0;
+                const percentage = goal.targetValue > 0 ? ((currentProgress / goal.targetValue) * 100).toFixed(2) : 0;
+                const isCompleted = currentProgress >= goal.targetValue;
+
+                listItem.innerHTML = `
+                    <div class="goal-info">
+                        <span class="goal-name">${goal.name}:</span>
+                        <span class="goal-target-value">Meta: ${formattedTarget}</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: ${percentage > 100 ? 100 : percentage}%;"></div>
+                        </div>
+                        <span class="progress-text ${isCompleted ? 'goal-completed' : ''}">
+                            ${formatCurrency(currentProgress)} de ${formattedTarget} (${percentage}%)
+                            ${isCompleted ? ' (Meta Atingida!)' : ''}
+                        </span>
+                    </div>
+                    <div class="actions">
+                        ${!isCompleted ? `<button class="action-btn add-money-btn" data-index="${originalIndex}">Adicionar Dinheiro</button>` : ''}
+                        <button class="action-btn edit-btn" data-index="${originalIndex}">Editar</button>
+                        <button class="action-btn delete-btn" data-index="${originalIndex}">Remover</button>
+                    </div>
+                    <!-- Formulário de Contribuição de Dinheiro (escondido por padrão) -->
+                    <div class="contribution-form" data-index="${originalIndex}">
+                        <label for="contribution-amount-${originalIndex}">Valor:</label>
+                        <input type="number" id="contribution-amount-${originalIndex}" step="0.01" placeholder="R$" class="contribution-input">
+                        <div class="form-actions">
+                            <button class="action-btn confirm-btn">Confirmar</button>
+                            <button class="action-btn cancel-btn">Cancelar</button>
+                        </div>
+                    </div>
+                    <!-- Formulário de Edição de Meta (inicialmente escondido) -->
+                    <div class="edit-form" data-index="${originalIndex}">
+                        <label for="edit-goal-name-${originalIndex}">Nome:</label>
+                        <input type="text" id="edit-goal-name-${originalIndex}" class="edit-goal-name-input">
+                        <label for="edit-goal-target-${originalIndex}">Meta (R$):</label>
+                        <input type="number" id="edit-goal-target-${originalIndex}" step="0.01" class="edit-goal-target-input">
+                        <div class="form-actions">
+                            <button class="action-btn confirm-btn">Confirmar</button>
+                            <button class="action-btn cancel-btn">Cancelar</button>
+                        </div>
+                    </div>
+                `;
+                goalItemsList.appendChild(listItem);
+            });
+
+            // Event Listeners para botões de Remover Meta
+            document.querySelectorAll('#goal-items .delete-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const originalIndexToRemove = parseInt(e.target.dataset.index);
+                    goals.splice(originalIndexToRemove, 1);
+                    updateGoalsDisplay();
+                    displayMessage('Meta removida com sucesso!', 'success');
+                });
+            });
+
+            // Event Listeners para botões Adicionar Dinheiro
+            document.querySelectorAll('#goal-items .add-money-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    const listItem = e.target.closest('li');
+                    const form = listItem.querySelector('.contribution-form');
+                    form.classList.toggle('active'); // Alterna a visibilidade do formulário
+                    const input = form.querySelector('.contribution-input');
+                    if (form.classList.contains('active')) {
+                         input.focus(); // Foca no input quando o form aparece
+                    }
+                });
+            });
+
+            // Event Listeners para botões Confirmar e Cancelar Contribuição
+            document.querySelectorAll('#goal-items .contribution-form .confirm-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const form = e.target.closest('.contribution-form');
+                    const index = parseInt(form.dataset.index);
+                    const input = form.querySelector('.contribution-input');
+                    const amount = parseFloat(input.value);
+
+                    if (!isNaN(amount) && amount > 0) {
+                        goals[index].currentProgress = (goals[index].currentProgress || 0) + amount;
+                        if (goals[index].currentProgress >= goals[index].targetValue) {
+                            displayMessage(`Meta "${goals[index].name}" atingida! Parabéns!`, 'info');
+                        } else {
+                            displayMessage(`R$${amount.toFixed(2)} adicionados à meta "${goals[index].name}"!`, 'success');
+                        }
+                        updateGoalsDisplay();
+                        form.classList.remove('active'); // Esconde o formulário
+                        input.value = ''; // Limpa o input
+                    } else {
+                        displayMessage('Por favor, insira um valor válido e positivo para adicionar.', 'error');
+                    }
+                });
+            });
+
+            document.querySelectorAll('#goal-items .contribution-form .cancel-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const form = e.target.closest('.contribution-form');
+                    form.classList.remove('active'); // Esconde o formulário
+                    form.querySelector('.contribution-input').value = ''; // Limpa o input
+                });
+            });
+
+            // Event Listeners para botões Editar Meta
+            document.querySelectorAll('#goal-items .edit-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.dataset.index);
+                    const listItem = e.target.closest('li');
+                    const form = listItem.querySelector('.edit-form');
+                    const currentGoal = goals[index];
+
+                    // Preenche o formulário com os dados atuais
+                    form.querySelector('.edit-goal-name-input').value = currentGoal.name;
+                    form.querySelector('.edit-goal-target-input').value = currentGoal.targetValue;
+
+                    form.classList.add('active'); // Mostra o formulário
+                    form.querySelector('.edit-goal-name-input').focus();
+                });
+            });
+
+            // Event Listeners para Confirmar Edição de Meta
+            document.querySelectorAll('#goal-items .edit-form .confirm-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const form = e.target.closest('.edit-form');
+                    const index = parseInt(form.dataset.index);
+                    const newName = form.querySelector('.edit-goal-name-input').value.trim();
+                    const newTarget = parseFloat(form.querySelector('.edit-goal-target-input').value);
+
+                    if (newName && !isNaN(newTarget) && newTarget > 0) {
+                        goals[index].name = newName;
+                        goals[index].targetValue = newTarget;
+                        updateGoalsDisplay();
+                        displayMessage('Meta atualizada com sucesso!', 'success');
+                        form.classList.remove('active');
+                    } else {
+                        displayMessage('Por favor, preencha o nome da meta e um valor válido.', 'error');
+                    }
+                });
+            });
+
+            // Event Listeners para Cancelar Edição de Meta
+            document.querySelectorAll('#goal-items .edit-form .cancel-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const form = e.target.closest('.edit-form');
+                    form.classList.remove('active');
+                });
+            });
+
+            localStorage.setItem('goals', JSON.stringify(goals));
+        }
+
+        // Evento de submissão do formulário de metas
+        goalForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = goalNameInput.value.trim();
+            const targetValue = parseFloat(goalTargetInput.value);
+
+            if (name && !isNaN(targetValue) && targetValue > 0) {
+                goals.push({ id: Date.now(), name, targetValue, currentProgress: 0 });
+                updateGoalsDisplay();
+                goalForm.reset();
+                goalNameInput.focus();
+                displayMessage('Meta adicionada com sucesso!', 'success');
+            } else {
+                displayMessage('Por favor, preencha o nome da meta e um valor válido (maior que zero).', 'error');
+            }
+        });
+
+        // Event Listener para o filtro de status de metas
+        goalStatusFilter.addEventListener('change', updateGoalsDisplay);
+
+
+        // --- Resumo Mensal de Despesas ---
+        const monthSelector = document.getElementById('month-selector');
+        const monthlySummaryList = document.getElementById('monthly-summary-list');
+
+        // Preenche o seletor de mês com base nas despesas existentes
+        function populateMonthSelector() {
+            const monthsInExpenses = new Set();
+            expenses.forEach(expense => {
+                const date = new Date(expense.date);
+                monthsInExpenses.add(`${date.getFullYear()}-${date.getMonth() + 1}`); // Formato AAAA-MM
+            });
+
+            const sortedMonths = Array.from(monthsInExpenses).sort((a, b) => {
+                const [yearA, monthA] = a.split('-').map(Number);
+                const [yearB, monthB] = b.split('-').map(Number);
+                if (yearA !== yearB) return yearB - yearA; // Ano mais recente primeiro
+                return monthB - monthA; // Mês mais recente primeiro
+            });
+
+            monthSelector.innerHTML = '<option value="">Selecione um mês</option>';
+            sortedMonths.forEach(monthKey => {
+                const [year, monthIndex] = monthKey.split('-').map(Number);
+                const option = document.createElement('option');
+                option.value = monthKey;
+                option.textContent = `${getMonthName(monthIndex - 1)} de ${year}`;
+                monthSelector.appendChild(option);
+            });
+
+            // Seleciona o mês atual se houver despesas para ele, ou o mais recente
+            const now = new Date();
+            const currentMonthKey = `${now.getFullYear()}-${now.getMonth() + 1}`;
+            if (monthsInExpenses.has(currentMonthKey)) {
+                monthSelector.value = currentMonthKey;
+            } else if (sortedMonths.length > 0) {
+                monthSelector.value = sortedMonths[0]; // Seleciona o mês mais recente
+            }
+        }
+
+        // Gera e exibe o resumo mensal
+        function generateMonthlySummary() {
+            monthlySummaryList.innerHTML = '';
+            const selectedMonthKey = monthSelector.value;
+
+            if (!selectedMonthKey) {
+                monthlySummaryList.innerHTML = '<li>Selecione um mês para ver o resumo.</li>';
+                return;
+            }
+
+            const [selectedYear, selectedMonth] = selectedMonthKey.split('-').map(Number);
+            const monthlyExpenses = expenses.filter(expense => {
+                const expenseDate = new Date(expense.date);
+                return expenseDate.getFullYear() === selectedYear && (expenseDate.getMonth() + 1) === selectedMonth;
+            });
+
+            if (monthlyExpenses.length === 0) {
+                monthlySummaryList.innerHTML = `<li>Nenhuma despesa registrada para ${getMonthName(selectedMonth - 1)} de ${selectedYear}.</li>`;
+                return;
+            }
+
+            const categoriesSummary = {};
+            monthlyExpenses.forEach(expense => {
+                if (categoriesSummary[expense.category]) {
+                    categoriesSummary[expense.category] += expense.value;
+                } else {
+                    categoriesSummary[expense.category] = expense.value;
+                }
+            });
+
+            // Converte para array e ordena do maior para o menor valor
+            const sortedCategories = Object.entries(categoriesSummary).sort(([, valueA], [, valueB]) => valueB - valueA);
+
+            sortedCategories.forEach(([category, totalValue]) => {
+                const listItem = document.createElement('li');
+                const budgetForCategory = budgets.find(b => b.category === category);
+                let budgetStatus = '';
+                let budgetStatusClass = '';
+
+                if (budgetForCategory) {
+                    const remaining = budgetForCategory.limit - totalValue;
+                    if (remaining < 0) {
+                        budgetStatus = ` (Estourou! ${formatCurrency(Math.abs(remaining))})`;
+                        budgetStatusClass = 'over';
+                    } else if (remaining <= budgetForCategory.limit * 0.2) { // Ex: menos de 20% do orçamento restante
+                        budgetStatus = ` (Perto do limite! ${formatCurrency(remaining)} restantes)`;
+                        budgetStatusClass = 'warning';
+                    } else {
+                        budgetStatus = ` (${formatCurrency(remaining)} restantes)`;
+                        budgetStatusClass = 'under';
+                    }
+                }
+
+                listItem.innerHTML = `
+                    <span>${category}:</span>
+                    <span>
+                        ${formatCurrency(totalValue)}
+                        ${budgetForCategory ? `<span class="budget-status-indicator ${budgetStatusClass}">${budgetStatus}</span>` : ''}
+                    </span>
+                `;
+                monthlySummaryList.appendChild(listItem);
+            });
+            displayMessage(`Resumo de ${getMonthName(selectedMonth - 1)} de ${selectedYear} atualizado.`, 'info');
+        }
+
+        // Event Listener para mudança no seletor de mês
+        monthSelector.addEventListener('change', generateMonthlySummary);
+
+        // --- Inicialização ao Carregar a Página ---
+        document.addEventListener('DOMContentLoaded', () => {
+            updateBalanceDisplay(); // Inicia o saldo
+            updateBudgetsDisplay(); // Carrega e exibe orçamentos
+            updateGoalsDisplay(); // Carrega e exibe metas
+            updateExpensesDisplay(); // Carrega despesas e atualiza gráfico/lista/selector/summary
+            populateMonthSelector(); // Garante que o seletor de mês esteja preenchido e selecionado corretamente
+            generateMonthlySummary(); // Garante que o resumo mensal seja exibido corretamente
+        });
     </script>
 </body>
 </html>

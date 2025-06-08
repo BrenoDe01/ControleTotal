@@ -1,0 +1,525 @@
+
+        /* --- Estilos da Topbar --- */
+        .topbar {
+            background-color: #222; /* Cor de fundo da barra */
+            color: #f0f0f0; /* Cor do texto */
+            padding: 15px 20px; /* Padding interno */
+            display: flex;
+            justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+            align-items: center; /* Alinha verticalmente no centro */
+            gap: 15px; /* Espaçamento entre os elementos */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: sticky; /* Fica fixo ao rolar a página */
+            top: 0;
+            z-index: 1000; /* Garante que fique acima de outros conteúdos */
+            width: 100%; /* Garante que a topbar ocupe toda a largura */
+            box-sizing: border-box; /* Inclui padding na largura */
+        }
+
+        .topbar nav {
+            display: flex;
+            flex-wrap: wrap; /* Permite que os links quebrem */
+            gap: 10px; /* Espaçamento entre os links */
+            justify-content: flex-start; /* Alinha os links à esquerda */
+        }
+
+        .topbar nav a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 1em;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            white-space: nowrap; /* Evita que o texto do link quebre */
+        }
+
+        .topbar nav a:hover {
+            background-color: #333;
+        }
+
+        /* --- Media Queries para Responsividade da Topbar --- */
+        @media (min-width: 768px) {
+            .topbar {
+                padding: 15px 40px; /* Mais padding em telas maiores */
+                gap: 20px;
+            }
+            .topbar nav a {
+                font-size: 1.1em;
+                padding: 10px 15px;
+            }
+        }
+
+        /* --- Estilos Gerais da Página --- */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column; /* Organiza os elementos verticalmente */
+            align-items: center;
+            padding: 0; /* Remove padding do body, containers terão seu próprio */
+            background-color: #f4f7f6;
+            color: #333;
+            min-height: 100vh; /* Garante que o body ocupe toda a altura da viewport */
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin: 30px 0; /* Margem para o título principal */
+            text-align: center;
+        }
+
+        /* --- Estilos dos Containers Principais --- */
+        #app-container,
+        #expenses-list-container,
+        #goals-container,
+        #monthly-summary-container,
+        #balance-container,
+        #budgets-container { /* Adicionado o novo container de orçamentos */
+            width: 90%; /* Ajusta a largura para ser 90% da tela em telas maiores */
+            max-width: 1200px; /* Largura máxima comum */
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 30px; /* Espaço entre os containers */
+        }
+
+        #app-container {
+            display: flex;
+            flex-direction: row; /* Layout lado a lado por padrão */
+            gap: 40px;
+            flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas menores */
+            justify-content: center; /* Centraliza os itens quando quebrarem a linha */
+        }
+
+        #form-section, #chart-section {
+            flex: 1; /* Permite que cada seção ocupe o espaço disponível */
+            min-width: 300px; /* Garante uma largura mínima para cada seção */
+            box-sizing: border-box;
+        }
+
+        /* --- Estilos do Formulário --- */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%; /* Ocupa a largura total disponível */
+            box-sizing: border-box; /* Inclui padding e border na largura */
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* --- Estilos do Gráfico --- */
+        #chart-container {
+            width: 100%;
+            max-width: 500px; /* Define uma largura máxima para o gráfico */
+            height: auto; /* A altura se ajustará automaticamente */
+            margin: auto; /* Centraliza o gráfico dentro de sua seção */
+        }
+
+        /* --- Estilos das Listas (Despesas e Metas) --- */
+        h2, h3 { /* Aplicando estilos comuns para títulos de seção */
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        h3 {
+             color: #555;
+             margin-top: 20px;
+             margin-bottom: 15px;
+             text-align: left;
+        }
+
+
+        ul {
+            list-style: none;
+            padding: 0;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        ul li {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.05rem;
+            flex-wrap: wrap; /* Permite quebrar em telas menores */
+            position: relative; /* Para posicionar formulários */
+        }
+
+        ul li:last-child {
+            border-bottom: none;
+        }
+
+        ul li span:first-child {
+            font-weight: bold;
+        }
+
+        /* Botões de Ação Comuns */
+        .action-btn { /* Classe genérica para botões de ação */
+            background-color: #007bff; /* Azul padrão */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+            margin-left: 10px; /* Espaçamento entre o botão e o conteúdo */
+            white-space: nowrap; /* Evita que o texto quebre */
+        }
+
+        .action-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-btn { /* Botão de remover específico */
+            background-color: #dc3545;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        .edit-btn { /* Botão de editar */
+            background-color: #ffc107; /* Amarelo */
+            color: #333;
+        }
+        .edit-btn:hover {
+            background-color: #e0a800;
+        }
+
+        /* Formulários de Edição/Contribuição (Escondidos por padrão) */
+        .edit-form, .contribution-form {
+            display: none; /* Escondido por padrão */
+            flex-direction: column;
+            gap: 5px;
+            padding-top: 10px;
+            width: 100%; /* Ocupa a largura do item da lista */
+            border-top: 1px solid #eee;
+            margin-top: 10px;
+        }
+        .edit-form.active, .contribution-form.active {
+            display: flex; /* Exibido quando ativo */
+        }
+        .edit-form input, .edit-form select, .contribution-form input {
+            width: 100%;
+            padding: 8px;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        .edit-form .form-actions, .contribution-form .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            width: 100%; /* Garante que os botões fiquem alinhados */
+        }
+        .edit-form button, .contribution-form button {
+            padding: 6px 12px;
+            font-size: 0.9em;
+            margin-top: 0;
+        }
+        .confirm-btn {
+            background-color: #28a745;
+        }
+        .confirm-btn:hover {
+            background-color: #218838;
+        }
+        .cancel-btn {
+            background-color: #6c757d;
+        }
+        .cancel-btn:hover {
+            background-color: #5a6268;
+        }
+
+        /* --- Estilos da Seção de Saldo --- */
+        #balance-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #current-balance-display {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #28a745; /* Verde para saldo positivo */
+            margin-bottom: 20px;
+        }
+
+        #current-balance-display.negative-balance {
+            color: #dc3545; /* Vermelho para saldo negativo */
+        }
+
+        #add-salary-form-container {
+            width: 100%;
+            max-width: 400px; /* Limita a largura do formulário de salário */
+            text-align: left; /* Alinha texto dentro do container do form */
+        }
+
+        #salary-form {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            margin-top: 15px;
+        }
+        /* Ajuste do botão de salário para não ficar no 100% da largura */
+        #salary-form button {
+            width: auto;
+            align-self: flex-end; /* Alinha o botão à direita */
+        }
+
+
+        /* --- Estilos da Seção de Metas --- */
+        #goal-items li .goal-info {
+            flex-grow: 1;
+            margin-right: 10px;
+            min-width: 150px;
+        }
+
+        #goal-items li .goal-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        #goal-items li .goal-target-value {
+            color: #555;
+            font-size: 0.95em;
+            margin-left: 10px;
+        }
+
+        .progress-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: 10px;
+            min-width: 100px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 5px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            border-radius: 5px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .progress-text {
+            font-size: 0.85em;
+            color: #777;
+            margin-top: 3px;
+        }
+
+        .goal-completed {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        /* --- Estilos da Seção de Orçamentos --- */
+        #budgets-list ul {
+            /* Usa estilos gerais de ul */
+        }
+        #budgets-list li {
+            /* Usa estilos gerais de ul li */
+            padding: 10px 15px;
+        }
+        #budgets-list li .budget-info {
+            flex-grow: 1;
+            margin-right: 10px;
+            min-width: 120px;
+        }
+        #budgets-list li .budget-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        #budgets-list li .budget-limit {
+            color: #555;
+            font-size: 0.95em;
+            margin-left: 10px;
+        }
+
+        /* --- Estilos da Seção de Resumo Mensal --- */
+        #month-selector-container,
+        #expenses-filter-container,
+        #goals-filter-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center; /* Centraliza os seletores */
+            flex-wrap: wrap; /* Permite quebrar em várias linhas */
+        }
+
+        #month-selector, #expense-category-filter, #goal-status-filter {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            min-width: 150px; /* Garante uma largura mínima */
+        }
+
+        #monthly-summary-list li {
+            font-size: 1.0em;
+            padding: 10px 15px;
+            justify-content: space-between;
+        }
+        #monthly-summary-list li span:first-child {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        #monthly-summary-list li span:last-child {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .budget-status-indicator {
+            font-size: 0.9em;
+            margin-left: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: white;
+            white-space: nowrap;
+        }
+        .budget-status-indicator.under {
+            background-color: #28a745; /* Verde */
+        }
+        .budget-status-indicator.warning {
+            background-color: #ffc107; /* Amarelo */
+        }
+        .budget-status-indicator.over {
+            background-color: #dc3545; /* Vermelho */
+        }
+
+        /* --- Responsividade Geral --- */
+        @media (max-width: 768px) {
+            #app-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            #form-section, #chart-section {
+                min-width: unset;
+                width: 100%;
+            }
+            #chart-container {
+                max-width: 100%;
+            }
+            #expenses-list-container,
+            #goals-container,
+            #monthly-summary-container,
+            #balance-container,
+            #budgets-container { /* Adicionado o novo container de orçamentos */
+                padding: 20px;
+                margin-top: 20px;
+            }
+            ul li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .action-btn { /* Botões de ação gerais em mobile */
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            .edit-form .form-actions, .contribution-form .form-actions {
+                 justify-content: center;
+                 width: 100%;
+            }
+            #goal-items li .goal-info,
+            #budgets-list li .budget-info {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+            .progress-container {
+                width: 100%;
+                margin-left: 0;
+                align-items: flex-start;
+            }
+            #month-selector-container,
+            #expenses-filter-container,
+            #goals-filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            #month-selector, #expense-category-filter, #goal-status-filter {
+                width: 100%;
+            }
+            #current-balance-display {
+                font-size: 2em;
+            }
+            #salary-form button { /* Ajuste do botão de salário em mobile */
+                width: 100%;
+                align-self: center;
+            }
+        }
+
+        /* Estilos para a mensagem personalizada (substitui alert) */
+        .custom-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745; /* Padrão de sucesso */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            white-space: nowrap; /* Evita quebra de linha em mensagens curtas */
+        }
+        .custom-message.error {
+            background-color: #dc3545; /* Estilo para erro */
+        }
+        .custom-message.info {
+            background-color: #007bff; /* Estilo para informação */
+        }

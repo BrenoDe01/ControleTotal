@@ -1,187 +1,152 @@
+/* --- Estilos Gerais (Mobile First - Padrão para todas as telas) --- */
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a; /* Fundo escuro */
+    color: #f0f0f0; /* Cor do texto padrão */
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura */
 }
 
-/* Estilo tela de login */
+/* --- Estilo tela de login --- */
 .login-body {
-  background-color: #111;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    background-color: #111;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Usa min-height para garantir que ocupa a tela inteira */
+    padding: 20px; /* Adiciona padding para evitar que o container grude nas bordas */
+    box-sizing: border-box;
 }
 
 .login-container {
-  background-color: #222;
-  padding: 2rem;
-  border-radius: 10px;
-  width: 300px;
+    background-color: #222;
+    padding: 1.5rem; /* Reduzi um pouco o padding para mobile */
+    border-radius: 10px;
+    width: 90%; /* Ocupa 90% da largura em mobile */
+    max-width: 380px; /* Largura máxima para o formulário de login */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
 }
 
 .login-container h1 {
-  text-align: center;
+    text-align: center;
+    font-size: 1.8rem; /* Ajustei o tamanho da fonte para mobile */
+    margin-bottom: 1.5rem;
 }
 
-.login-container input, .login-container button {
-  display: block;
-  width: 100%;
-  margin: 1rem 0;
-  padding: 0.5rem;
+.login-container input,
+.login-container button {
+    display: block;
+    width: 100%;
+    margin: 0.8rem 0; /* Ajustei margem */
+    padding: 0.7rem; /* Aumentei o padding para touch */
+    border: 1px solid #444;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: #333;
+    color: #f0f0f0;
 }
 
 .login-container button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-/* Estilo da tela de dashboard */
+.login-container button:hover {
+    background-color: #388e3c;
+}
+
+/* --- Estilo da tela de dashboard --- */
 .dashboard-body {
-  background-color: #111;
-  color: #fff;
+    background-color: #1a1a1a; /* Mantém o fundo escuro geral */
+    color: #f0f0f0;
+    min-height: 100vh;
 }
 
+/* Topbar (cabeçalho principal do dashboard) */
 .topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #1c1c1c;
-  padding: 1rem 2rem;
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1c1c1c;
+    padding: 1rem 1.5rem; /* Ajusta padding para mobile */
+    gap: 15px; /* Espaçamento entre os elementos */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    position: sticky; /* Fica fixo ao rolar a página */
+    top: 0;
+    z-index: 1000;
 }
 
 .topbar .logo {
-  font-size: 1.2rem;
-  font-weight: bold;
+    font-size: 1.5rem; /* Ajusta tamanho do logo para mobile */
+    font-weight: bold;
+    color: #4CAF50; /* Destaque para o logo */
+    white-space: nowrap; /* Evita quebra de linha */
+    flex-shrink: 0; /* Não permite encolher */
+    order: 1; /* Ordem em mobile */
+}
+
+.topbar nav {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os links quebrem */
+    justify-content: center; /* Centraliza links em mobile */
+    flex-grow: 1; /* Permite que a nav ocupe espaço */
+    order: 3; /* Ordem para mobile: nav abaixo do user */
+    width: 100%; /* Ocupa largura total em mobile */
+    margin-top: 10px; /* Espaço entre logo/user e nav */
+    gap: 10px; /* Espaçamento entre os links */
 }
 
 .topbar nav a {
-  color: #fff;
-  margin: 0 10px;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem; /* Tamanho da fonte para mobile */
+    padding: 8px 12px; /* Aumenta área clicável */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.topbar nav a:hover {
+    background-color: #333;
 }
 
 .topbar .user {
-  font-size: 1rem;
+    font-size: 1rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    order: 2; /* Ordem para mobile: user ao lado do logo */
 }
 
+/* Conteúdo principal do dashboard */
 .main-content {
-  padding: 2rem;
+    padding: 1.5rem; /* Ajusta padding para mobile */
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .section {
-  margin-bottom: 2rem;
+    margin-bottom: 2.5rem; /* Espaçamento entre as seções */
 }
 
-.video-grid {
-  display: flex;
-  gap: 1rem;
-}
-
-.video-card {
-  background-color: #222;
-  border-radius: 10px;
-  width: 300px;
-  height: 180px;
-  overflow: hidden;
-  padding: 0;
-}
-.video-card iframe {
-  border: none;
-  width: 100%;
-  height: 100%;
-}
-
-
-.form-movimento input, .form-movimento select, .form-movimento button {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-  width: 100%;
-}
-
-.form-movimento {
-  max-width: 300px;
-}
-
-#listaTransacoes {
-  list-style: none;
-  padding: 0;
-}
-
-#listaTransacoes li {
-  background-color: #222;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border-left: 5px solid;
-}
-
-#listaTransacoes li.entrada {
-  border-color: #4caf50;
-}
-
-#listaTransacoes li.saida {
-  border-color: #f44336;
-}
-
-.resumo {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-}
-
-/* Estilos gerais para o corpo */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1a1a1a; /* Fundo escuro como na imagem */
-    color: #f0f0f0; /* Cor do texto claro */
-    margin: 0;
-    padding: 0;
-}
-
-/* Estilo para o cabeçalho (nav) - ajustar conforme seu layout */
-nav {
-    background-color: #282828;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav a {
-    color: #f0f0f0;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 1rem;
-}
-
-nav a:hover {
-    color: #aaa;
-}
-
-.header-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.section-title { /* Para os subtítulos como "Aulas", "Dicas do Dia" */
-    font-size: 2em;
+.section-title {
+    font-size: 1.8rem; /* Tamanho de título para mobile */
     color: #e0e0e0;
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 15px;
     text-align: left;
-    padding-left: 20px; /* Alinha com o conteúdo */
+    padding-left: 0; /* Remove padding-left fixo, usa o padding do main-content */
 }
 
-/* Container principal para as seções */
-.main-content {
-    padding: 20px;
-    max-width: 1200px; /* Limita a largura do conteúdo principal */
-    margin: 0 auto; /* Centraliza o conteúdo */
-}
-
-
-/* Estilos para a seção de vídeos */
+/* Seção de Vídeos/Aulas */
 .video-section {
     margin-bottom: 40px;
 }
@@ -191,8 +156,10 @@ nav a:hover {
     overflow-x: auto; /* Permite a rolagem horizontal */
     scroll-snap-type: x mandatory; /* Faz com que os itens "encaixem" na rolagem */
     -webkit-overflow-scrolling: touch; /* Melhora a rolagem em dispositivos iOS */
-    gap: 20px; /* Espaçamento entre os vídeos */
+    gap: 15px; /* Espaçamento entre os vídeos */
     padding-bottom: 15px; /* Espaço para a barra de rolagem */
+    padding-left: 5px; /* Pequeno padding para o início da rolagem */
+    padding-right: 5px; /* Pequeno padding para o fim da rolagem */
 }
 
 .video-carousel::-webkit-scrollbar {
@@ -209,73 +176,140 @@ nav a:hover {
 }
 
 .video-item {
-    flex: 0 0 auto; /* Não cresce nem encolhe, largura automática */
-    width: 320px; /* Largura padrão para cada vídeo */
-    height: 240px; /* Altura total do item, iframe + botão */
+    flex: 0 0 auto; /* Não cresce nem encolhe */
+    width: 90vw; /* Ocupa 90% da largura da viewport em telas menores */
+    height: auto; /* Altura automática */
     background-color: #282828;
     border-radius: 8px;
-    overflow: hidden; /* Garante que o iframe não saia */
+    overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    scroll-snap-align: start; /* O item se alinha ao início da rolagem */
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 .video-item iframe {
     width: 100%;
-    height: 180px; /* Altura fixa do iframe */
+    /* Mantém a proporção 16:9 para o vídeo */
+    height: calc(90vw * 9 / 16);
     border: none;
+    display: block; /* Remove possíveis espaços extras */
 }
 
 .video-item .watch-on-youtube {
     display: block;
-    background-color: #c00; /* Cor do YouTube */
+    background-color: #c00;
     color: white;
     text-align: center;
     padding: 10px 0;
     text-decoration: none;
     font-weight: bold;
     transition: background-color 0.3s ease;
+    font-size: 0.95rem; /* Ajusta tamanho da fonte */
 }
 
 .video-item .watch-on-youtube:hover {
     background-color: #a00;
 }
 
-/* Responsividade para vídeos */
-@media (max-width: 768px) {
-    .video-item {
-        width: 90vw; /* Ocupa 90% da largura da viewport em telas menores */
-        height: auto;
-    }
-    .video-item iframe {
-        height: calc(90vw * 9 / 16); /* Mantém a proporção 16:9 para o vídeo */
-    }
+
+/* Seção de Formulário de Movimento */
+.form-movimento {
+    max-width: 100%; /* Ocupa a largura total disponível */
+    padding: 15px; /* Adiciona padding para mobile */
+    background-color: #222;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
 }
 
+.form-movimento input,
+.form-movimento select,
+.form-movimento button {
+    margin: 0.6rem 0; /* Ajusta margens */
+    padding: 0.8rem; /* Aumenta padding para touch */
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #444;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #333;
+    color: #f0f0f0;
+}
 
+.form-movimento button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
 
-/* Estilos para a seção de Dicas do Dia */
+.form-movimento button:hover {
+    background-color: #388e3c;
+}
+
+/* Lista de Transações */
+#listaTransacoes {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+}
+
+#listaTransacoes li {
+    background-color: #222;
+    padding: 0.8rem; /* Aumenta padding */
+    margin: 0.6rem 0; /* Ajusta margem */
+    border-left: 5px solid;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Permite quebrar em telas menores */
+    font-size: 1rem;
+}
+
+#listaTransacoes li.entrada {
+    border-color: #4caf50;
+}
+
+#listaTransacoes li.saida {
+    border-color: #f44336;
+}
+
+/* Resumo de Saldo/Movimento */
+.resumo {
+    margin-top: 1.5rem;
+    font-size: 1.1rem; /* Ajusta tamanho da fonte para mobile */
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Seção de Dicas do Dia */
 .tips-section {
-    margin-top: 40px;
+    margin-top: 30px;
     margin-bottom: 40px;
 }
 
 .tip-cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Colunas responsivas */
-    gap: 20px;
-    padding: 0 20px; /* Alinha com o padding do main-content */
+    /* Padrão para mobile: 1 coluna */
+    grid-template-columns: 1fr;
+    gap: 15px; /* Espaçamento entre os cards */
+    padding: 0; /* Remove padding fixo, usa o do main-content */
 }
 
 .tip-card {
     background-color: #282828;
-    padding: 20px;
+    padding: 18px; /* Ajusta padding */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     text-decoration: none;
     color: #f0f0f0;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
 }
 
 .tip-card:hover {
@@ -284,12 +318,188 @@ nav a:hover {
 }
 
 .tip-card h3 {
-    color: #4CAF50; /* Uma cor de destaque para o título da dica */
+    color: #4CAF50;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 8px; /* Ajusta margem */
+    font-size: 1.2rem; /* Ajusta tamanho do título da dica */
 }
 
 .tip-card p {
-    font-size: 0.95em;
-    line-height: 1.5;
+    font-size: 0.9em;
+    line-height: 1.4; /* Ajusta line-height para legibilidade */
+}
+
+/* --- Media Queries (Ajustes para telas maiores) --- */
+
+/* Telas maiores que 480px (Smartphones maiores, portrait) */
+@media (min-width: 481px) {
+    .login-container {
+        padding: 2rem;
+        max-width: 400px;
+    }
+    .login-container h1 {
+        font-size: 2.2rem;
+    }
+    .topbar .logo {
+        font-size: 1.8rem;
+    }
+    .topbar nav a {
+        font-size: 1rem;
+    }
+    .topbar .user {
+        font-size: 1.1rem;
+    }
+    .section-title {
+        font-size: 2rem;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+    /* Vídeos - Permite mais de 90vw se a tela for um pouco maior */
+    .video-item {
+        width: 300px; /* Volta para a largura original para tablets */
+        height: 240px;
+    }
+    .video-item iframe {
+        height: 180px; /* Volta para a altura original */
+    }
+    .tip-cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 2 ou 3 colunas em tablets */
+        gap: 20px;
+    }
+    .tip-card h3 {
+        font-size: 1.3rem;
+    }
+}
+
+
+/* Telas maiores que 768px (Tablets e Desktops) */
+@media (min-width: 769px) {
+    .login-body {
+        /* Mantém o layout centralizado */
+    }
+    .login-container {
+        max-width: 450px; /* Aumenta um pouco mais */
+    }
+    .login-container h1 {
+        font-size: 2.5rem;
+    }
+
+    /* Topbar - Layout em linha */
+    .topbar {
+        padding: 1rem 2rem;
+        flex-wrap: nowrap; /* Não quebra mais a linha */
+        justify-content: space-between; /* Espaçamento original */
+    }
+    .topbar .logo {
+        font-size: 2rem;
+        order: 0; /* Volta à ordem natural */
+    }
+    .topbar nav {
+        flex-grow: 0; /* Não cresce mais para empurrar */
+        order: 0; /* Volta à ordem natural */
+        width: auto; /* Não ocupa mais 100% */
+        margin-top: 0; /* Remove margem superior */
+        gap: 20px; /* Mais espaço entre links */
+    }
+    .topbar nav a {
+        font-size: 1.1rem;
+    }
+    .topbar .user {
+        order: 0; /* Volta à ordem natural */
+    }
+
+    .main-content {
+        padding: 2rem; /* Padding original */
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        padding-left: 20px; /* Se desejar um padding específico para títulos aqui */
+    }
+
+    /* Vídeos - Mais espaço e tamanho fixo */
+    .video-carousel {
+        gap: 20px;
+    }
+    .video-item {
+        width: 320px; /* Largura padrão para desktop */
+        height: 240px;
+    }
+    .video-item iframe {
+        height: 180px; /* Altura padrão para desktop */
+    }
+    .video-item .watch-on-youtube {
+        font-size: 1rem;
+    }
+
+    /* Formulário de Movimento */
+    .form-movimento {
+        max-width: 300px; /* Volta para a largura original para desktop */
+        padding: 20px; /* Padding original */
+    }
+    .form-movimento input,
+    .form-movimento select,
+    .form-movimento button {
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+    }
+
+    /* Lista de Transações */
+    #listaTransacoes li {
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+        font-size: 1.05rem;
+    }
+
+    .resumo {
+        font-size: 1.2rem;
+    }
+
+    /* Dicas do Dia */
+    .tip-cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Pelo menos 3 colunas em desktop */
+        gap: 25px;
+        padding: 0; /* Alinha com o padding do main-content */
+    }
+    .tip-card {
+        padding: 20px;
+    }
+    .tip-card h3 {
+        font-size: 1.4rem;
+    }
+    .tip-card p {
+        font-size: 0.95em;
+    }
+}
+
+/* Telas muito grandes (opcional, para mais colunas) */
+@media (min-width: 1200px) {
+    .login-container {
+        max-width: 500px;
+    }
+    .login-container h1 {
+        font-size: 3rem;
+    }
+    .topbar {
+        padding: 1.5rem 3rem;
+    }
+    .topbar .logo {
+        font-size: 2.2rem;
+    }
+    .topbar nav a {
+        font-size: 1.2rem;
+    }
+    .topbar .user {
+        font-size: 1.2rem;
+    }
+    .main-content {
+        padding: 3rem;
+    }
+    .section-title {
+        font-size: 2.5rem;
+    }
+    .tip-cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Mais colunas em telas grandes */
+        gap: 30px;
+    }
 }
