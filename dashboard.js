@@ -1,4 +1,15 @@
-document.getElementById("userName").textContent = localStorage.getItem("usuario") || "Visitante";
+document.addEventListener("DOMContentLoaded", function () {
+  const user = localStorage.getItem("usuario");
+  const span = document.getElementById("userName");
+
+  if (user) {
+    span.textContent = user;
+  } else {
+    span.textContent = "Visitante";
+  }
+});
+
+
 
 const form = document.getElementById("transacaoForm");
 const lista = document.getElementById("listaTransacoes");
