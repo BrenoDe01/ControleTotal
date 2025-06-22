@@ -6,7 +6,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
   if (username && password) {
     localStorage.setItem("usuario", username);
-    window.location.href = "/Dashboard.html";
+    window.location.href = "Dashboard.html";
   } else {
     alert("Preencha todos os campos!");
   }
